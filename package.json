@@ -1,5 +1,5 @@
 {
-  "name": "Template",
+  "name": "fastify-typeorm",
   "version": "1.0.0",
   "description": "Default Template",
   "main": "src/index.ts",

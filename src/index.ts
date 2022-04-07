@@ -1,3 +1,5 @@
+import { createConnection } from "typeorm";
+import { default_database, default_connection } from "./../app/config/database";
 import fastify from "fastify";
 import { stdout } from "process";
 import { PORT } from "../app/config/config";
@@ -15,9 +17,21 @@ class AppServer {
   private async routes() {
     app.register(router, { prefix: "api" });
   }
-  private async connection() {}
+  private async connection() {
+    const default_db = default_database();
+    return { default_db };
+  }
 
   public async main() {
+    try {
+      this.connection();
+      console.clear();
+      console.log(`connected to database ${default_connection.database_name}`);
+    } catch (err) {
+      console.log(err);
+      process.exit(1);
+    }
+
     try {
       app.listen(this.port, async () => {
         stdout.write(`Server is running at port ${this.port}...\n`);
