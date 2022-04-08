@@ -6,6 +6,7 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -49,5 +50,6 @@ export class UserEntity extends BaseEntity {
   deleted_at!: string;
 
   @OneToMany(() => ContactInfoEntity, (contact) => contact.user)
+  @JoinColumn({ referencedColumnName: "user_id" })
   contact?: ContactInfoEntity[];
 }

@@ -15,7 +15,7 @@ class UserRepository {
     this.userModel = userModel;
   }
   async allUser() {
-    const all_user = await this.userEntity.find();
+    const all_user = await this.userEntity.find({ relations: ["contact"] });
     const response = new ResponseData(true, 200, "Success", {
       users: all_user,
     });

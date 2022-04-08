@@ -15,11 +15,12 @@ import {
 
 @Entity("contacts_info")
 export class ContactInfoEntity extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  @PrimaryGeneratedColumn("increment")
+  id!: number;
 
-  @Column({ type: "varchar", length: 100 })
-  user_id!: string;
+  @ManyToOne(() => UserEntity, (user) => user.contact, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+  user?: UserEntity;
 
   @Column({ type: "varchar", nullable: true })
   email!: string;
@@ -41,8 +42,4 @@ export class ContactInfoEntity extends BaseEntity {
 
   @DeleteDateColumn({ type: "datetime", nullable: true })
   deleted_at!: string;
-
-  @ManyToOne(() => UserEntity, (user) => user.contact)
-  @JoinColumn({ referencedColumnName: "id" })
-  user?: UserEntity;
 }
